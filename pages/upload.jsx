@@ -2,7 +2,7 @@ import Layout from "../components/Layout";
 import { useState } from "react";
 import Input from "../components/Input";
 import db  from "../src/firebase";
-// import { collection, addDoc } from "firebase/firestore";
+import { collection, addDoc } from "firebase/firestore";
 // import {
 //   getStorage,
 //   ref,
@@ -16,9 +16,7 @@ const Upload = () => {
   const [url, setUrl] = useState();
   const [image, setImage] = useState();
   const [text, setText] = useState();
-
-  console.log(db);
-
+console.log(collection, addDoc);
   // const handleSubmit = () => {
   //   const storage = getStorage();
   //   const storageRef = ref(storage, `image/${image.name}`);
