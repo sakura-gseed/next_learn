@@ -3,7 +3,7 @@ import Layout from "../components/Layout";
 import Card from "../components/Card";
 import imgSrc from "../public/test01.jpg";
 import { useState, useEffect } from "react";
-// import db from "../src/firebase";
+import { db } from "../src/firebase";
 // import { collection, getDocs } from "firebase/firestore";
 
 export default function Home() {
@@ -14,6 +14,7 @@ export default function Home() {
   //     setPosts(querySnapshot.docs.map((doc) => doc.data()));
   //   });
   // }, []);
+  console.log(db);
 
   return (
     <div className={styles.container}>
