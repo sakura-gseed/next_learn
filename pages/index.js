@@ -15,6 +15,7 @@ export default function Home() {
   //   });
   // }, []);
   console.log(db);
+  
 
   return (
     <div className={styles.container}>
