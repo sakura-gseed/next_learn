@@ -7,7 +7,7 @@ import { useState, useEffect } from "react";
 // import { collection, getDocs } from "firebase/firestore";
 
 export default function Home() {
-  const [posts, setPosts] = useState([]);
+  // const [posts, setPosts] = useState([]);
   // useEffect(() => {
   //   const postsCollectionRef = collection(db, "posts");
   //   getDocs(postsCollectionRef).then((querySnapshot) => {
