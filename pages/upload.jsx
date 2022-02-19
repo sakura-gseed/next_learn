@@ -3,12 +3,12 @@ import { useState } from "react";
 import Input from "../components/Input";
 import db  from "../src/firebase";
 import { collection, addDoc } from "firebase/firestore";
-// import {
-//   getStorage,
-//   ref,
-//   getDownloadURL,
-//   uploadBytesResumable,
-// } from "firebase/storage";
+import {
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 const Upload = () => {
   const [title, setTitle] = useState();
@@ -16,7 +16,7 @@ const Upload = () => {
   const [url, setUrl] = useState();
   const [image, setImage] = useState();
   const [text, setText] = useState();
-console.log(collection, addDoc);
+console.log(getStorage, ref, getDownloadURL, uploadBytesResumable);
   // const handleSubmit = () => {
   //   const storage = getStorage();
   //   const storageRef = ref(storage, `image/${image.name}`);
