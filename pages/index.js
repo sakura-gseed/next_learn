@@ -2,9 +2,9 @@ import styles from "../styles/Home.module.css";
 import Layout from "../components/Layout";
 import Card from "../components/Card";
 import imgSrc from "../public/test01.jpg";
-// import { useState, useEffect } from "react";
-// import { db } from "../src/firebase";
-// import { collection, getDocs } from "firebase/firestore";
+import { useState, useEffect } from "react";
+import { db } from "../src/firebase";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function Home() {
   // const [posts, setPosts] = useState([]);
