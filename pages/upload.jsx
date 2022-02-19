@@ -1,14 +1,14 @@
 import Layout from "../components/Layout";
 import { useState } from "react";
 import Input from "../components/Input";
-import { db } from "../src/firebase";
-import { collection, addDoc } from "firebase/firestore";
-import {
-  getStorage,
-  ref,
-  getDownloadURL,
-  uploadBytesResumable,
-} from "firebase/storage";
+// import { db } from "../src/firebase";
+// import { collection, addDoc } from "firebase/firestore";
+// import {
+//   getStorage,
+//   ref,
+//   getDownloadURL,
+//   uploadBytesResumable,
+// } from "firebase/storage";
 
 const Upload = () => {
   const [title, setTitle] = useState();
@@ -17,37 +17,37 @@ const Upload = () => {
   const [image, setImage] = useState();
   const [text, setText] = useState();
 
-  const handleSubmit = () => {
-    const storage = getStorage();
-    const storageRef = ref(storage, `image/${image.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        console.log("成功");
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          try {
-            const postsCollectionRef = collection(db, "posts");
-            addDoc(postsCollectionRef, {
-              title: title,
-              date: date,
-              url: url,
-              text: text,
-              imageUrl: downloadURL,
-            });
-          } catch (error) {
-            console.error("Error adding document: ", error);
-          }
-        });
-      }
-    );
-    alert("投稿が完了しました");
-  };
+  // const handleSubmit = () => {
+  //   const storage = getStorage();
+  //   const storageRef = ref(storage, `image/${image.name}`);
+  //   const uploadTask = uploadBytesResumable(storageRef, image);
+  //   uploadTask.on(
+  //     "state_changed",
+  //     (snapshot) => {
+  //       console.log("成功");
+  //     },
+  //     (error) => {
+  //       console.log(error);
+  //     },
+  //     () => {
+  //       getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+  //         try {
+  //           const postsCollectionRef = collection(db, "posts");
+  //           addDoc(postsCollectionRef, {
+  //             title: title,
+  //             date: date,
+  //             url: url,
+  //             text: text,
+  //             imageUrl: downloadURL,
+  //           });
+  //         } catch (error) {
+  //           console.error("Error adding document: ", error);
+  //         }
+  //       });
+  //     }
+  //   );
+  //   alert("投稿が完了しました");
+  // };
 
   return (
     <Layout>
@@ -81,7 +81,7 @@ const Upload = () => {
           <div className="col-span-2 text-right">
             <button
               className="py-2 px-4  bg-blue-400 hover:bg-blue-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-              onClick={handleSubmit}
+              // onClick={handleSubmit}
             >
               投稿
             </button>
