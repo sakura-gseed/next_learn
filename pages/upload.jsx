@@ -1,7 +1,7 @@
 import Layout from "../components/Layout";
 import { useState } from "react";
 import Input from "../components/Input";
-import { db } from "../src/firebase";
+import db  from "../src/firebase";
 import { collection, addDoc } from "firebase/firestore";
 import {
   getStorage,
