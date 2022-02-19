@@ -4,18 +4,16 @@ import Card from "../components/Card";
 import imgSrc from "../public/test01.jpg";
 import { useState, useEffect } from "react";
 import { db } from "../src/firebase";
-// import { collection, getDocs } from "firebase/firestore";
+import { collection, getDocs } from "firebase/firestore";
 
 export default function Home() {
-  // const [posts, setPosts] = useState([]);
-  // useEffect(() => {
-  //   const postsCollectionRef = collection(db, "posts");
-  //   getDocs(postsCollectionRef).then((querySnapshot) => {
-  //     setPosts(querySnapshot.docs.map((doc) => doc.data()));
-  //   });
-  // }, []);
-  console.log(db);
-  
+  const [posts, setPosts] = useState([]);
+  useEffect(() => {
+    const postsCollectionRef = collection(db, "posts");
+    getDocs(postsCollectionRef).then((querySnapshot) => {
+      setPosts(querySnapshot.docs.map((doc) => doc.data()));
+    });
+  }, []);
 
   return (
     <div className={styles.container}>
