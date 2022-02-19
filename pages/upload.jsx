@@ -1,16 +1,52 @@
 import Layout from "../components/Layout";
-import Input from "../components/Input";
 import { useState } from "react";
+import Input from "../components/Input";
+import { db } from "../src/firebase";
+import { collection, addDoc } from "firebase/firestore";
+import {
+  getStorage,
+  ref,
+  getDownloadURL,
+  uploadBytesResumable,
+} from "firebase/storage";
 
 const Upload = () => {
   const [title, setTitle] = useState();
   const [date, setDate] = useState();
   const [url, setUrl] = useState();
-  const [text, setText] = useState();
   const [image, setImage] = useState();
+  const [text, setText] = useState();
 
-  const uploadPost = () => {
-    console.log(title, date, url, text);
+  const handleSubmit = () => {
+    const storage = getStorage();
+    const storageRef = ref(storage, `image/${image.name}`);
+    const uploadTask = uploadBytesResumable(storageRef, image);
+    uploadTask.on(
+      "state_changed",
+      (snapshot) => {
+        console.log("成功");
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+          try {
+            const postsCollectionRef = collection(db, "posts");
+            addDoc(postsCollectionRef, {
+              title: title,
+              date: date,
+              url: url,
+              text: text,
+              imageUrl: downloadURL,
+            });
+          } catch (error) {
+            console.error("Error adding document: ", error);
+          }
+        });
+      }
+    );
+    alert("投稿が完了しました");
   };
 
   return (
@@ -20,12 +56,15 @@ const Upload = () => {
           投稿する
         </div>
         <div className="grid max-w-xl grid-cols-2 gap-4 m-auto">
-          <Input placeholder="タイトル" setFunc={setTitle} />
-          <Input placeholder="日付" setFunc={setDate} />
-          <Input placeholder="URL" setFunc={setUrl} />
+          <Input placeholder="タイトル" func={setTitle} />
+          <Input placeholder="日付" func={setDate} />
+          <Input placeholder="URL" func={setUrl} />
           <div className="col-span-2 lg:col-span-1">
             <div className=" relative ">
-              <input type="file" onChange={(e) => setImage(e.target.value)} />
+              <input
+                type="file"
+                onChange={(e) => setImage(e.target.files[0])}
+              />
             </div>
           </div>
           <div className="col-span-2">
@@ -41,9 +80,8 @@ const Upload = () => {
           </div>
           <div className="col-span-2 text-right">
             <button
-              type="submit"
               className="py-2 px-4  bg-blue-400 hover:bg-blue-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-              onClick={uploadPost}
+              onClick={handleSubmit}
             >
               投稿
             </button>
