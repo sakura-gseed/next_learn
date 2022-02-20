@@ -1,14 +1,6 @@
 import Layout from "../components/Layout";
 import { useState } from "react";
 import Input from "../components/Input";
-import db  from "../src/firebase";
-import { collection, addDoc } from "firebase/firestore";
-import {
-  getStorage,
-  ref,
-  getDownloadURL,
-  uploadBytesResumable,
-} from "firebase/storage";
 
 const Upload = () => {
   const [title, setTitle] = useState();
@@ -16,38 +8,7 @@ const Upload = () => {
   const [url, setUrl] = useState();
   const [image, setImage] = useState();
   const [text, setText] = useState();
-
-  const handleSubmit = () => {
-    const storage = getStorage();
-    const storageRef = ref(storage, `image/${image.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, image);
-    uploadTask.on(
-      "state_changed",
-      (snapshot) => {
-        console.log("成功");
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          try {
-            const postsCollectionRef = collection(db, "posts");
-            addDoc(postsCollectionRef, {
-              title: title,
-              date: date,
-              url: url,
-              text: text,
-              imageUrl: downloadURL,
-            });
-          } catch (error) {
-            console.error("Error adding document: ", error);
-          }
-        });
-      }
-    );
-    alert("投稿が完了しました");
-  };
+  console.log(title, date, url, text);
 
   return (
     <Layout>
@@ -56,9 +17,36 @@ const Upload = () => {
           投稿する
         </div>
         <div className="grid max-w-xl grid-cols-2 gap-4 m-auto">
-          <Input placeholder="タイトル" func={setTitle} />
-          <Input placeholder="日付" func={setDate} />
-          <Input placeholder="URL" func={setUrl} />
+          <div className="col-span-2 lg:col-span-1">
+            <div className=" relative ">
+              <input
+                type="text"
+                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                placeholder="タイトル"
+                onChange={e => setTitle(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="col-span-2 lg:col-span-1">
+            <div className=" relative ">
+              <input
+                type="text"
+                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                placeholder="日付"
+                onChange={e => setDate(e.target.value)}
+              />
+            </div>
+          </div>
+          <div className="col-span-2 lg:col-span-1">
+            <div className=" relative ">
+              <input
+                type="text"
+                className=" rounded-lg border-transparent flex-1 appearance-none border border-gray-300 w-full py-2 px-4 bg-white text-gray-700 placeholder-gray-400 shadow-sm text-base focus:outline-none focus:ring-2 focus:ring-purple-600 focus:border-transparent"
+                placeholder="URL"
+                onChange={e => setUrl(e.target.value)}
+              />
+            </div>
+          </div>
           <div className="col-span-2 lg:col-span-1">
             <div className=" relative ">
               <input
@@ -79,10 +67,7 @@ const Upload = () => {
             </label>
           </div>
           <div className="col-span-2 text-right">
-            <button
-              className="py-2 px-4  bg-blue-400 hover:bg-blue-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg "
-              onClick={handleSubmit}
-            >
+            <button className="py-2 px-4  bg-blue-400 hover:bg-blue-700 focus:ring-indigo-500 focus:ring-offset-indigo-200 text-white w-full transition ease-in duration-200 text-center text-base font-semibold shadow-md focus:outline-none focus:ring-2 focus:ring-offset-2  rounded-lg ">
               投稿
             </button>
           </div>
